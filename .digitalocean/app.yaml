@@ -1,0 +1,50 @@
+name: contact-form-app
+region: nyc
+
+services:
+  - name: backend
+    github:
+      repo: your-username/your-repo
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    dockerfile: |
+      FROM python:3.11-slim
+      WORKDIR /app
+      COPY backend/requirements.txt .
+      RUN pip install --no-cache-dir -r requirements.txt
+      COPY backend/ .
+      EXPOSE 8000
+      CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    http_port: 8000
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: SUPABASE_URL
+        scope: RUN_TIME
+        value: ${SUPABASE_URL}
+      - key: SUPABASE_KEY
+        scope: RUN_TIME
+        value: ${SUPABASE_KEY}
+      - key: PORT
+        scope: RUN_TIME
+        value: "8000"
+
+  - name: frontend
+    github:
+      repo: your-username/your-repo
+      branch: main
+      deploy_on_push: true
+    build_command: cd frontend && npm install && npm run build
+    run_command: npx serve -s dist -l $PORT
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    envs:
+      - key: VITE_BACKEND_URL
+        scope: RUN_TIME
+        value: ${BACKEND_URL}
+      - key: PORT
+        scope: RUN_TIME
+        value: "3000"
+
