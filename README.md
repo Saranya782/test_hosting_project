@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Multi-Platform Contact Form Application
 
 A full-stack contact form application built with React (frontend) and FastAPI (backend), integrated with Supabase for data storage. This project is configured for deployment on multiple hosting platforms: Fly.io, Railway, Vercel, Render, DigitalOcean, and Netlify.
@@ -367,3 +368,6 @@ For issues or questions:
 
 **Happy Deploying! 🚀**
 
+=======
+# test_hosting_project
+>>>>>>> 70342a27a06e794cd4e7d23ff631d4bec73fc55f
